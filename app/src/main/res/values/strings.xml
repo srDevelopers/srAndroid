@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">srAndroid</string>
+    <string name="srHome">srHome</string>
+    <string name="open_srnow">srNow 열기</string>
 </resources>
