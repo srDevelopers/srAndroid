@@ -1,0 +1,25 @@
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="kr.edcan.srandroid.MainHeader" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="asdf"
+            android:textSize="@dimen/default_text"
+            android:textStyle="bold" />
+    </LinearLayout>
+</layout>
