@@ -26,6 +26,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setData() {
         arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
+        arrayList.add("공지사항")
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
+        arrayList.add(Notice("Sunrin Networking Day"))
     }
 
     private fun setLayout() {
@@ -37,12 +47,14 @@ class MainActivity : AppCompatActivity() {
         LastAdapter.with(arrayList, BR.item)
                 .map<MainHeader>(R.layout.content_main_header)
                 .map<String>(R.layout.recycler_title)
+                .map<Notice>(R.layout.item_main)
                 .onBindListener(object
                 : LastAdapter.OnBindListener {
                     override fun onBind(item: Any, view: View, type: Int, position: Int) {
                         when (type) {
                             R.layout.content_main_header -> {
                                 val headerBinding = DataBindingUtil.getBinding<ContentMainHeaderBinding>(view)
+                                headerBinding.scoreManage.setOnClickListener { startActivity<SrNowActivity>() }
                             }
                         }
                     }
