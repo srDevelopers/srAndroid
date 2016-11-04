@@ -9,7 +9,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -68,10 +68,11 @@
 
         <RelativeLayout
             android:id="@+id/scoreManage"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_tile_background">
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@drawable/main_tile_background"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,7 +81,7 @@
                 android:drawableLeft="@drawable/ic_srhome_quickmenu_sungjeokinfo"
                 android:drawablePadding="10dp"
                 android:padding="@dimen/text_margin"
-                android:text="성적관리" />
+                android:text="성적 관리" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

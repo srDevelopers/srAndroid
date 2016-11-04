@@ -7,12 +7,26 @@
             type="kr.edcan.srandroid.Notice" />
     </data>
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/text"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{item.title}"
-        android:textSize="@dimen/label_text"
         android:background="?attr/selectableItemBackground"
-        android:padding="@dimen/activity_horizontal_margin" />
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:text="@{item.title}"
+            android:textSize="@dimen/label_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#11000000" />
+    </LinearLayout>
 </layout>

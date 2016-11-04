@@ -39,6 +39,8 @@ dependencies {
     compile 'org.jetbrains.anko:anko-sdk23:0.9'
     compile 'com.github.nitrico.lastadapter:lastadapter:1.2.3'
     kapt 'com.android.databinding:compiler:2.2.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 }
 repositories {
     mavenCentral()

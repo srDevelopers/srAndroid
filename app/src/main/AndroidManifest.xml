@@ -15,7 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SrNowActivity"></activity>
+        <activity android:name=".SrNowActivity" />
+        <activity android:name=".NoticeActivity" />
+        <activity
+            android:name=".ScoreActivity"
+            android:label="@string/title_activity_score"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

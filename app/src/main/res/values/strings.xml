@@ -2,4 +2,7 @@
     <string name="app_name">srAndroid</string>
     <string name="srHome">srHome</string>
     <string name="open_srnow">srNow 열기</string>
+    <string name="title_activity_score">ScoreActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

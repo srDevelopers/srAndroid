@@ -10,6 +10,10 @@ import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.edcan.srandroid.databinding.ContentMainHeaderBinding
+import kr.edcan.srandroid.databinding.RecyclerTitleBinding
+import org.jetbrains.anko.excludeFromRecents
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.noHistory
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
@@ -54,7 +58,11 @@ class MainActivity : AppCompatActivity() {
                         when (type) {
                             R.layout.content_main_header -> {
                                 val headerBinding = DataBindingUtil.getBinding<ContentMainHeaderBinding>(view)
-                                headerBinding.scoreManage.setOnClickListener { startActivity<SrNowActivity>() }
+                                headerBinding.scoreManage.setOnClickListener { startActivity(intentFor<SrNowActivity>().noHistory()) }
+                            }
+                            R.layout.recycler_title->{
+                                val titleBinding = DataBindingUtil.getBinding<RecyclerTitleBinding>(view)
+                                titleBinding.text.text = item.toString()
                             }
                         }
                     }
