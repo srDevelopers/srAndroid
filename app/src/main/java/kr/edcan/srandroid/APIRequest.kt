@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Created by JunseokOh on 2016. 11. 4..
@@ -17,4 +18,7 @@ interface APIRequest {
 
     @GET("/api/parse/md/{year}/{month}")
     fun getLunch(@Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ArrayList<String>>>
+
+    @GET("/timetable")
+    fun getTimeTable(@Query("grade") grade: Int, @Query("class") classNum: Int, @Query("day") day: Int)
 }
