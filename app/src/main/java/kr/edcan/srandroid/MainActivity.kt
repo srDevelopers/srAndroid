@@ -6,40 +6,57 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.github.nitrico.lastadapter.LastAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.edcan.srandroid.databinding.ContentMainHeaderBinding
 import kr.edcan.srandroid.databinding.RecyclerTitleBinding
-import org.jetbrains.anko.excludeFromRecents
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.noHistory
-import org.jetbrains.anko.startActivity
+import okhttp3.ResponseBody
+import org.jetbrains.anko.*
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
 
+    var noticeArr: ArrayList<String> = ArrayList()
     var arrayList = ObservableArrayList<Any>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setData()
-        setLayout()
     }
 
     private fun setData() {
-        arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
-        arrayList.add("공지사항")
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
-        arrayList.add(Notice("Sunrin Networking Day"))
+        var getAnnounce: Call<ResponseBody> = NetworkHelper.networkInstance.getAnnounce()
+        getAnnounce.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                var json = JSONArray(response!!.body().string())
+                for (s in 0..json.length() - 1) {
+                    var jsonobject: JSONObject = json.getJSONObject(s)
+                    noticeArr.add(jsonobject.getString("title"))
+                }
+                arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
+                arrayList.add("공지사항")
+                for (s in 0..noticeArr.size - 1) {
+                    arrayList.add(Notice(noticeArr[s]))
+                }
+                UI {
+                    setLayout()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                Log.e("asdf", t!!.message)
+            }
+        })
+
     }
 
     private fun setLayout() {
@@ -60,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                                 val headerBinding = DataBindingUtil.getBinding<ContentMainHeaderBinding>(view)
                                 headerBinding.scoreManage.setOnClickListener { startActivity(intentFor<SrNowActivity>().noHistory()) }
                             }
-                            R.layout.recycler_title->{
+                            R.layout.recycler_title -> {
                                 val titleBinding = DataBindingUtil.getBinding<RecyclerTitleBinding>(view)
                                 titleBinding.text.text = item.toString()
                             }

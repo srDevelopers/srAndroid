@@ -11,5 +11,6 @@
     <color name="textLight">#99ffffff</color>
     <color name="textNormal">#4C4C4C</color>
     <color name="textRed">#ff0000</color>
+    <color name="softwareColor">#2E559D</color>
 
 </resources>

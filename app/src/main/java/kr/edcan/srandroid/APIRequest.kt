@@ -1,5 +1,6 @@
 package kr.edcan.srandroid
 
+import okhttp3.ResponseBody
 import java.util.ArrayList
 
 import retrofit2.Call
@@ -19,6 +20,9 @@ interface APIRequest {
     @GET("/api/parse/md/{year}/{month}")
     fun getLunch(@Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ArrayList<String>>>
 
-    @GET("/timetable")
-    fun getTimeTable(@Query("grade") grade: Int, @Query("class") classNum: Int, @Query("day") day: Int)
+    @GET("/api/schedule/{grade}/{class}/{day}")
+    fun getTimeTable(@Path("grade") grade: Int, @Path("class") classNum: Int, @Path("day") day: Int): Call<ResponseBody>
+
+    @GET("/api/announce")
+    fun getAnnounce(): Call<ResponseBody>
 }
