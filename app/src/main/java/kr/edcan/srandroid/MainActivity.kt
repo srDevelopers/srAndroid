@@ -1,8 +1,10 @@
 package kr.edcan.srandroid
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableArrayList
 import android.graphics.Color
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -24,7 +26,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
 
-    var noticeArr: ArrayList<String> = ArrayList()
+    var noticeArr: ArrayList<Announce> = ArrayList()
     var arrayList = ObservableArrayList<Any>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +36,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        var getAnnounce: Call<ResponseBody> = NetworkHelper.networkInstance.getAnnounce()
-        getAnnounce.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                var json = JSONArray(response!!.body().string())
-                for (s in 0..json.length() - 1) {
-                    var jsonobject: JSONObject = json.getJSONObject(s)
-                    noticeArr.add(jsonobject.getString("title"))
-                }
+        var getAnnounce: Call<ArrayList<Announce>> = NetworkHelper.networkInstance.getAnnounce()
+        getAnnounce.enqueue(object : Callback<ArrayList<Announce>> {
+            override fun onResponse(call: Call<ArrayList<Announce>>?, response: Response<ArrayList<Announce>>?) {
+                var responseBody = response!!.body()
+                noticeArr = response.body()
                 arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
                 arrayList.add("공지사항")
                 for (s in 0..noticeArr.size - 1) {
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+            override fun onFailure(call: Call<ArrayList<Announce>>?, t: Throwable?) {
                 Log.e("asdf", t!!.message)
             }
         })
@@ -81,6 +80,14 @@ class MainActivity : AppCompatActivity() {
                                 val titleBinding = DataBindingUtil.getBinding<RecyclerTitleBinding>(view)
                                 titleBinding.text.text = item.toString()
                             }
+                        }
+                    }
+                })
+                .onClickListener(object : LastAdapter.OnClickListener {
+                    override fun onClick(item: Any, view: View, type: Int, position: Int) {
+                        when (type) {
+                            R.layout.item_main ->
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse((arrayList[position] as Notice).notice.url)))
                         }
                     }
                 })

@@ -8,6 +8,7 @@ import com.github.nitrico.lastadapter.LastAdapter
 import com.mobeam.barcodeService.service.MobeamErrorCode
 import kotlinx.android.synthetic.main.activity_sr_now.*
 import okhttp3.ResponseBody
+import org.jetbrains.anko.UI
 import org.jetbrains.anko.doAsync
 import org.json.JSONObject
 import retrofit2.Call
@@ -27,18 +28,6 @@ class SrNowActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        // TODO Get TimeTable, Lunch
-        val timeTable: ArrayList<String> = ArrayList()
-        val lunch: ArrayList<String> = ArrayList()
-        arrayList.run {
-            add("")
-            add(IDCard("김태윤", "KIM TAE YUN", "S2160250"))
-            add(TimeTable(timeTable))
-            add(Lunch(lunch))
-        }
-    }
-
-    private fun setLayout() {
         var timeTableString: String = ""
         var lunchString: String = ""
         var getTimeTable: Call<ResponseBody> = NetworkHelper.networkInstance.getTimeTable(1, 4, 1)
@@ -48,13 +37,39 @@ class SrNowActivity : AppCompatActivity() {
                 for (i in 0..result.length() - 1) {
                     timeTableString += result[i].toString() + "\n"
                 }
+                Log.e("asdf", timeTableString)
+                val lunch: ArrayList<String> = ArrayList()
+                arrayList.run {
+                    add("")
+                    add(IDCard("김태윤", "KIM TAE YUN", "S2160250"))
+                    add(TimeTable(timeTableString))
+                    add(Lunch(lunch))
+                }
+                var date = Date(System.currentTimeMillis())
+                NetworkHelper.networkInstance.getLunch(date.year, date.month+1).enqueue(object : Callback<ArrayList<ArrayList<String>>>{
+                    override fun onResponse(call: Call<ArrayList<ArrayList<String>>>?, response: Response<ArrayList<ArrayList<String>>>?) {
+                        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<ArrayList<String>>>?, t: Throwable?) {
+                        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
+                UI{
+                    setLayout()
+                }
             }
 
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 Log.e("asdf", t!!.message)
             }
         })
-        Log.e("asdf", timeTableString + "\n")
+        // TODO Get TimeTable, Lunch
+
+    }
+
+    private fun setLayout() {
+
         LinearLayoutManager(this).let {
             it.orientation = LinearLayoutManager.VERTICAL
             srNowRecycler.layoutManager = it

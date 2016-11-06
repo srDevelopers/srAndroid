@@ -24,5 +24,5 @@ interface APIRequest {
     fun getTimeTable(@Path("grade") grade: Int, @Path("class") classNum: Int, @Path("day") day: Int): Call<ResponseBody>
 
     @GET("/api/announce")
-    fun getAnnounce(): Call<ResponseBody>
+    fun getAnnounce(): Call<ArrayList<Announce>>
 }

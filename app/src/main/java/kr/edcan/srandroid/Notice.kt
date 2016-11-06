@@ -5,8 +5,9 @@ import java.util.*
 /**
  * Created by JunseokOh on 2016. 11. 4..
  */
-data class Notice(val title: String)
-data class TimeTable(val tableList: ArrayList<String>)
+data class Announce(val url: String, val title: String)
+data class Notice(val notice: Announce)
+data class TimeTable(val tableList: String)
 data class Lunch(val lunchList: ArrayList<String>)
 data class IDCard(
         val name : String,

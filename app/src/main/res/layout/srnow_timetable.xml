@@ -4,7 +4,7 @@
 
         <variable
             name="item"
-            type="kr.edcan.srandroid.IDCard" />
+            type="kr.edcan.srandroid.TimeTable" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,15 +32,17 @@
                     android:layout_height="wrap_content"
                     android:background="#9A68F1"
                     android:padding="@dimen/activity_horizontal_margin"
-                    android:text="모션그래픽스 / 3교시"
+                    android:text="오늘의 시간표"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/large_text" />
 
                 <TextView
-                    android:padding="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
-                    android:text="@string/timetable"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:text="@{item.tableList}"
+                    android:textColor="@color/textNormal"
+                    android:textSize="@dimen/default_text" />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
