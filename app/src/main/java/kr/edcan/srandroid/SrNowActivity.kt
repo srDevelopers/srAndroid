@@ -45,17 +45,21 @@ class SrNowActivity : AppCompatActivity() {
                     add(TimeTable(timeTableString))
                     add(Lunch(lunch))
                 }
-                var date = Date(System.currentTimeMillis())
-                NetworkHelper.networkInstance.getLunch(date.year, date.month+1).enqueue(object : Callback<ArrayList<ArrayList<String>>>{
-                    override fun onResponse(call: Call<ArrayList<ArrayList<String>>>?, response: Response<ArrayList<ArrayList<String>>>?) {
-                        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                var date = Calendar.getInstance()
+                var day = date.get(Calendar.YEAR).toString()
+                var month = if (date.get(Calendar.MONTH) + 1 > 9) (date.get(Calendar.MONTH) + 1).toString() else "0" + (date.get(Calendar.MONTH) + 1).toString()
+                Log.e("asdf", day + " " + month)
 
-                    override fun onFailure(call: Call<ArrayList<ArrayList<String>>>?, t: Throwable?) {
-                        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-                })
-                UI{
+//                NetworkHelper.networkInstance.getLunch(date.get(Calendar.YEAR), date.get(Calendar.MONTH + 1)).enqueue(object : Callback<ArrayList<ArrayList<String>>> {
+//                    override fun onResponse(call: Call<ArrayList<ArrayList<String>>>?, response: Response<ArrayList<ArrayList<String>>>?) {
+//                        var responseBody = response!!.body()
+//                        Log.e("asdf", responseBody[date.get(Calendar.DAY_OF_MONTH)].size.toString())
+//                    }
+//
+//                    override fun onFailure(call: Call<ArrayList<ArrayList<String>>>?, t: Throwable?) {
+//                    }
+//                })
+                UI {
                     setLayout()
                 }
             }

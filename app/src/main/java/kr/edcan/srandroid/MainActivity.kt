@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         getAnnounce.enqueue(object : Callback<ArrayList<Announce>> {
             override fun onResponse(call: Call<ArrayList<Announce>>?, response: Response<ArrayList<Announce>>?) {
                 var responseBody = response!!.body()
-                noticeArr = response.body()
+                noticeArr = responseBody
                 arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
                 arrayList.add("공지사항")
                 for (s in 0..noticeArr.size - 1) {
