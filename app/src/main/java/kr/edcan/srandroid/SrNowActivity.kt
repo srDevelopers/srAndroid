@@ -16,9 +16,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.NetworkInterface
 import java.util.*
+import kotlin.properties.Delegates
 
 class SrNowActivity : AppCompatActivity() {
 
+    var asdf by Delegates.notNull<ResponseBody>()
     var arrayList: ArrayList<Any> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,31 +39,28 @@ class SrNowActivity : AppCompatActivity() {
                 for (i in 0..result.length() - 1) {
                     timeTableString += result[i].toString() + "\n"
                 }
-                Log.e("asdf", timeTableString)
-                val lunch: ArrayList<String> = ArrayList()
                 arrayList.run {
                     add("")
                     add(IDCard("김태윤", "KIM TAE YUN", "S2160250"))
                     add(TimeTable(timeTableString))
-                    add(Lunch(lunch))
                 }
                 var date = Calendar.getInstance()
-                var day = date.get(Calendar.YEAR).toString()
+                var year = date.get(Calendar.YEAR).toString()
                 var month = if (date.get(Calendar.MONTH) + 1 > 9) (date.get(Calendar.MONTH) + 1).toString() else "0" + (date.get(Calendar.MONTH) + 1).toString()
-                Log.e("asdf", day + " " + month)
 
-//                NetworkHelper.networkInstance.getLunch(date.get(Calendar.YEAR), date.get(Calendar.MONTH + 1)).enqueue(object : Callback<ArrayList<ArrayList<String>>> {
-//                    override fun onResponse(call: Call<ArrayList<ArrayList<String>>>?, response: Response<ArrayList<ArrayList<String>>>?) {
-//                        var responseBody = response!!.body()
-//                        Log.e("asdf", responseBody[date.get(Calendar.DAY_OF_MONTH)].size.toString())
-//                    }
-//
-//                    override fun onFailure(call: Call<ArrayList<ArrayList<String>>>?, t: Throwable?) {
-//                    }
-//                })
-                UI {
-                    setLayout()
-                }
+                NetworkHelper.networkInstance.getLunch(year, month).enqueue(object : Callback<ArrayList<ArrayList<String>>> {
+                    override fun onResponse(call: Call<ArrayList<ArrayList<String>>>?, response: Response<ArrayList<ArrayList<String>>>?) {
+                        var responseBody = response!!.body()
+                        var day = date.get(Calendar.DAY_OF_MONTH)
+                        arrayList.add(Lunch(responseBody[date.get(Calendar.DAY_OF_MONTH)]))
+                        UI {
+                            setLayout()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<ArrayList<String>>>?, t: Throwable?) {
+                    }
+                })
             }
 
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {

@@ -18,7 +18,7 @@ interface APIRequest {
     fun getCalendar(@Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<String>>
 
     @GET("/api/parse/md/{year}/{month}")
-    fun getLunch(@Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ArrayList<String>>>
+    fun getLunch(@Path("year") year: String, @Path("month") month: String): Call<ArrayList<ArrayList<String>>>
 
     @GET("/api/schedule/{grade}/{class}/{day}")
     fun getTimeTable(@Path("grade") grade: Int, @Path("class") classNum: Int, @Path("day") day: Int): Call<ResponseBody>
