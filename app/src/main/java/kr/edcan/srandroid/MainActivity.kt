@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     var arrayList = ObservableArrayList<Any>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService<SRNowService>()
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setData()
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ArrayList<Announce>>?, response: Response<ArrayList<Announce>>?) {
                 var responseBody = response!!.body()
                 noticeArr = responseBody
-                arrayList.add(MainHeader("오늘 일정 없음", "디지털 콘텐츠 경진대회"))
+                arrayList.add(MainHeader("오늘 일정 없음", "내일 일정 없음"))
                 arrayList.add("공지사항")
                 for (s in 0..noticeArr.size - 1) {
                     arrayList.add(Notice(noticeArr[s]))
